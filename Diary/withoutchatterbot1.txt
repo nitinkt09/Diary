@@ -1,0 +1,150 @@
+from tkinter import *
+from datetime import datetime
+
+# Define the GUI window
+root = Tk()
+root.title("Chatbot Diary")
+
+# Create a label and text box for the conversation
+conversation_label = Label(root, text="Conversation:")
+conversation_label.grid(row=0, column=0)
+conversation_box = Text(root, height=10, width=50)
+conversation_box.grid(row=1, column=0)
+
+# Create a label and text box for the user's message
+message_label = Label(root, text="Your message:")
+message_label.grid(row=2, column=0)
+message_box = Entry(root, width=50)
+message_box.grid(row=3, column=0)
+
+# Define a function to send the user's message and get the bot's response
+def send_message():
+    message_text = message_box.get().strip()
+    if message_text:
+        response_text = get_bot_response(message_text)
+        conversation_box.insert(END, f"You: {message_text}\n")
+        conversation_box.insert(END, f"Bot: {response_text}\n")
+        message_box.delete(0, END)
+    else:
+        messagebox.showwarning("Warning", "Please enter a message first.")
+
+# Create a button to send the user's message
+send_button = Button(root, text="Send", command=send_message)
+send_button.grid(row=4, column=0)
+
+# Create a button to save the conversation as a diary entry
+def save_entry():
+    date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    conversation_text = conversation_box.get("1.0", END).strip()
+    if conversation_text:
+        filename = f"diary_{date_string}.txt"
+        with open(filename, "w") as f:
+            f.write(conversation_text)
+        messagebox.showinfo("Success", "Diary entry saved!")
+        conversation_box.delete("1.0", END)
+    else:
+        messagebox.showwarning("Warning", "There is nothing to save.")
+
+save_button = Button(root, text="Save Entry", command=save_entry)
+save_button.grid(row=5, column=0)
+
+# Define a function to get the bot's response
+def get_bot_response(message_text):
+    # Replace this with your own chatbot functionality
+    # This is just a simple example that always responds with "Hello!"
+    return "Hello!"
+
+# Run the GUI window
+root.mainloop()
+
+
+"""When you run this program, a GUI window will appear with a conversation text box, a message text box, and two buttons. 
+You can type a message in the message text box and click the "Send" button to send it to the bot. 
+The bot will respond with a message, which will be displayed in the conversation text box. You can continue chatting with the bot and the conversation will be logged in the text box.
+
+When you're finished chatting, you can click the "Save Entry" button to save the conversation as a diary entry.
+ The text file will be named "diary_DATE_TIME.txt" and will be saved in the same directory as the Python program.
+ If you try to save an empty diary entry, a warning message will appear.
+ If you successfully save a diary entry, a success message will appear, and the conversation text box will be cleared so you can start a new conversation.
+
+Note that in this example program, the get_bot_response function is just a placeholder that always responds with
+"""
+
+
+
+from tkinter import *
+import random
+import string
+import os
+from datetime import datetime
+
+# Define the GUI window
+root = Tk()
+root.title("Chatbot Diary")
+
+# Create a label and text box for the conversation
+conversation_label = Label(root, text="Conversation:")
+conversation_label.grid(row=0, column=0)
+conversation_box = Text(root, height=10, width=50)
+conversation_box.grid(row=1, column=0)
+
+# Create a label and text box for the user's message
+message_label = Label(root, text="Your message:")
+message_label.grid(row=2, column=0)
+message_box = Entry(root, width=50)
+message_box.grid(row=3, column=0)
+
+# Define a function to send the user's message and get the bot's response
+def send_message():
+    message_text = message_box.get().strip()
+    if message_text:
+        response_text = get_bot_response(message_text)
+        conversation_box.insert(END, f"You: {message_text}\n")
+        conversation_box.insert(END, f"Bot: {response_text}\n")
+        message_box.delete(0, END)
+    else:
+        messagebox.showwarning("Warning", "Please enter a message first.")
+
+# Create a button to send the user's message
+send_button = Button(root, text="Send", command=send_message)
+send_button.grid(row=4, column=0)
+
+# Create a button to save the conversation as a diary entry
+def save_entry():
+    date_string = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    conversation_text = conversation_box.get("1.0", END).strip()
+    if conversation_text:
+        filename = f"diary_{date_string}.txt"
+        with open(filename, "w") as f:
+            f.write(conversation_text)
+        messagebox.showinfo("Success", "Diary entry saved!")
+        conversation_box.delete("1.0", END)
+    else:
+        messagebox.showwarning("Warning", "There is nothing to save.")
+
+save_button = Button(root, text="Save Entry", command=save_entry)
+save_button.grid(row=5, column=0)
+
+# Define a function to get the bot's response
+def get_bot_response(message_text):
+    # Replace this with your own chatbot functionality
+    # This is just a simple example that always responds with "Hello!"
+    greetings = ["hello", "hi", "hey", "howdy"]
+    thanks = ["thank you", "thanks", "appreciate"]
+    sorry = ["sorry", "apologize", "regret"]
+    questions = ["what", "when", "where", "why", "who", "how"]
+    
+    message_text = message_text.lower()
+    if any(greeting in message_text for greeting in greetings):
+        return "Hello, how can I help you today?"
+    elif any(thank in message_text for thank in thanks):
+        return "You're welcome! Is there anything else I can do for you?"
+    elif any(sorry in message_text for sorry in sorry):
+        return "It's okay, no worries. How can I assist you today?"
+    elif any(question in message_text for question in questions):
+        return "I'm sorry, I don't have the answer to that. Is there anything else I can help you with?"
+    else:
+        return "I'm sorry, I didn't understand what you said."
+
+# Run the GUI window
+root.mainloop()
